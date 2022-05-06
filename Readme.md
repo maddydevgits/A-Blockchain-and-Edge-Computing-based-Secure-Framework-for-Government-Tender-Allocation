@@ -7,4 +7,5 @@ Blockchain Framework for Government Tender Allocation
 3. Create API Routes in Python for Register and Login |:heavy_check_mark:|
 4. Validate the Register and Login with Smart Contracts |:heavy_check_mark:|
 5. Create a Tender Dashboard Page after Successful login |:heavy_check_mark:|
-6. Validate Login and Logout from the Dashboard Page |:x:|
+6. Validate Login and Logout from the Dashboard Page |:heavy_check_mark:|
+7. Create Tender Page and connect with dashboard page |:x:|
