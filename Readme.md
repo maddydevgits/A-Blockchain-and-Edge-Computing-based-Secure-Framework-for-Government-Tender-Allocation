@@ -11,4 +11,5 @@ Blockchain Framework for Government Tender Allocation
 7. Create Tender Page and connect with dashboard page |:heavy_check_mark:|
 8. Validate Tender Page with Smart Contract |:heavy_check_mark:|
 9. Create Bid Home Page and API Route |:heavy_check_mark:|
-10. Create Bid Register and Login Pages and API Routes |:x:|
+10. Create Bid Register and Login Pages and API Routes |:heavy_check_mark:|
+11. Validate Bid Register and Login with Smart Contract |:x:|

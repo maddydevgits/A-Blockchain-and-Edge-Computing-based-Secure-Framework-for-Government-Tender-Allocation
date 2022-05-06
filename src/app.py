@@ -40,7 +40,15 @@ app.secret_key = 'makeskilled'
 @app.route('/bid')
 def bidIndexPage():
     return (render_template('bindex.html'))
-    
+
+@app.route('/bregister')
+def bidRegisterPage():
+    return (render_template('bregister.html'))
+
+@app.route('/blogin')
+def bidLoginPage():
+    return (render_template('blogin.html'))
+
 @app.route('/')
 def indexPage():
     return (render_template('index.html'))

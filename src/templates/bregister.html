@@ -48,9 +48,9 @@
 	      </button>
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav m-auto">
-	        	<li class="nav-item active"><a href="/" class="nav-link">Home</a></li>
-			  	<li class="nav-item"><a href="/register" class="nav-link">Register</a></li>
-	        	<li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
+	        	<li class="nav-item"><a href="/bid" class="nav-link">Home</a></li>
+			  	<li class="nav-item active"><a href="/bregister" class="nav-link">Register</a></li>
+	        	<li class="nav-item"><a href="/blogin" class="nav-link">Login</a></li>
 	          	
 	        </ul>
 	      </div>
@@ -60,25 +60,27 @@
 
 	</section>
     <section>
-        <h3 style="text-align: center;">Tender Dashboard</h3>
-    </section>
-	<br/>
+        <h3 style="text-align: center;">Bid Dashboard</h3> 
+     </section>
 	<section>
 	<div class="container">
-		<p style="text-align: justify">Tenders or contracts are generally used by governments and companies 
-		to procure goods or services. Wrongful tender management leads to 
-		huge losses in case of faulty practices. 
-		This includes favouring of contractors, improper record maintenance, 
-		lack of transparency, hacking, data modification and other issues. 
-		</p>
-		<p style="text-align: justify">
-		To ensure the complete tender management process is secure and 
-		efficient we here make use of blockchain tech to solve tender management
-		issues. A blockchain is secured by encryption coupled with indisputable block 
-		based architecture for transaction management. </p>
-		
-		<p style="text-align: justify">In this case we make use of blockchain technology to secure transaction 
-			to ensure a completely transparent tendering process. </p>
+		<h2>Register</h2>
+              <form action="/registerUser" method="POST">
+              
+              <div class="form-group">
+                 <label for="name">Your Wallet Address:</label>
+                 <input type="text" class="form-control" id="username" placeholder="Enter your wallet Address" name="username">
+              </div>
+              
+              <div class="form-group">
+                <label for="name">Password:</label>
+                <input type="password" class="form-control" id="password" placeholder="Enter your password" name="password">
+              </div>
+          
+              
+              
+              <button type="submit" class="btn btn-warning btn-register">Register Here</button>
+              </form>
 	</div>
 	</section>
 
@@ -102,7 +104,3 @@
   </script>
 </body>
 </html>
-
-
-
-
