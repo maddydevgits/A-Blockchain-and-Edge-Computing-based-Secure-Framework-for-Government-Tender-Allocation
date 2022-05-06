@@ -118,7 +118,11 @@ def bidTenderPage():
     contract,web3=connect_Blockchain(bidOwner)
     tx_hash=contract.functions.bidTender(int(tenderId),int(bidAmount),bidEmail).transact()
     web3.eth.waitForTransactionReceipt(tx_hash)
-    return (redirect('/createbid'))
+    return (redirect('/verifybid'))
+
+@app.route('/verifybid')
+def verifyBidPage():
+    return (render_template('verifybid.html'))
 
 @app.route('/')
 def indexPage():
