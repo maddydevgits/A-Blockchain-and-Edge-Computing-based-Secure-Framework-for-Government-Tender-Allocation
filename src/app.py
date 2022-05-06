@@ -49,6 +49,29 @@ def bidRegisterPage():
 def bidLoginPage():
     return (render_template('blogin.html'))
 
+@app.route('/bregisterUser',methods=['GET','POST'])
+def bregisterUser():
+    username=request.form['username']
+    password=request.form['password']
+    print(username,password)
+    contract,web3=connect_Blockchain_register(username)
+    tx_hash=contract.functions.registerUser(username,int(password)).transact()
+    web3.eth.waitForTransactionReceipt(tx_hash)
+    return(redirect('/blogin'))
+
+@app.route('/bloginUser',methods=['GET','POST'])
+def bloginUser():
+    username=request.form['username']
+    password=int(request.form['password'])
+    print(username,password)
+    contract,web3=connect_Blockchain_register(username)
+    state=contract.functions.loginUser(username,password).call()
+    if(state==True):
+        session['username']=username
+        return (redirect('/bdashboard'))
+    else:
+        return (redirect('/blogin'))
+
 @app.route('/')
 def indexPage():
     return (render_template('index.html'))
