@@ -108,6 +108,18 @@ def blogoutPage():
 def bidPage():
     return render_template('bid.html')
 
+@app.route('/bidTender',methods=['GET','POST'])
+def bidTenderPage():
+    bidOwner=request.form['bidOwner']
+    tenderId=request.form['tenderId']
+    bidAmount=request.form['bidAmount']
+    bidEmail=request.form['bidEmail']
+    print(bidOwner,tenderId,bidAmount,bidEmail)
+    contract,web3=connect_Blockchain(bidOwner)
+    tx_hash=contract.functions.bidTender(int(tenderId),int(bidAmount),bidEmail).transact()
+    web3.eth.waitForTransactionReceipt(tx_hash)
+    return (redirect('/createbid'))
+
 @app.route('/')
 def indexPage():
     return (render_template('index.html'))
