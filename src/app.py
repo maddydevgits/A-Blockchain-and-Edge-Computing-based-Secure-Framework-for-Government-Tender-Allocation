@@ -99,6 +99,12 @@ def bdashboardPage():
     print(data)
     return render_template('bdashboard.html',len=len(data),dashboard_data=data)
 
+@app.route('/blogout')
+def blogoutPage():
+    session.pop('username',None)
+    return render_template('bindex.html')
+
+
 @app.route('/')
 def indexPage():
     return (render_template('index.html'))
