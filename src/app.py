@@ -1,6 +1,17 @@
 from flask import Flask, redirect,render_template,request,session
 from web3 import Web3,HTTPProvider
 import json
+import smtplib
+
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email import encoders
+from email.mime.base import MIMEBase
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+smtpObj=smtplib.SMTP('smtp.gmail.com',587)
+smtpObj.starttls()
+smtpObj.login('tenderblockchain@gmail.com','m@keskilled')
 
 def connect_Blockchain_register(acc):
     blockchain_address="http://127.0.0.1:7545"
@@ -124,17 +135,17 @@ def bidTenderPage():
 def verifyBidPage():
     contract,web3=connect_Blockchain(session['username'])
     tender_owners,tender_ids,tender_datas,tender_statuses,tender_bidders=contract.functions.viewTenders().call()
-    print(tender_owners)
-    print(tender_ids)
-    print(tender_datas)
-    print(tender_statuses)
-    print(tender_bidders)
+    # print(tender_owners)
+    # print(tender_ids)
+    # print(tender_datas)
+    # print(tender_statuses)
+    # print(tender_bidders)
     bid_tender_ids,bid_emails,bidders,bidamounts=contract.functions.viewBids().call()
-    print(bid_tender_ids)
-    print(bid_emails)
-    print(bidders)
-    print(bidamounts)
-    print(session['username'])
+    # print(bid_tender_ids)
+    # print(bid_emails)
+    # print(bidders)
+    # print(bidamounts)
+    # print(session['username'])
     data=[]
     datai=[]
     for i in range(len(bid_tender_ids)):
@@ -184,17 +195,17 @@ def logoutPage():
 def bidsPage():
     contract,web3=connect_Blockchain(session['username'])
     tender_owners,tender_ids,tender_datas,tender_statuses,tender_bidders=contract.functions.viewTenders().call()
-    print(tender_owners)
-    print(tender_ids)
-    print(tender_datas)
-    print(tender_statuses)
-    print(tender_bidders)
+    # print(tender_owners)
+    # print(tender_ids)
+    # print(tender_datas)
+    # print(tender_statuses)
+    # print(tender_bidders)
     bid_tender_ids,bid_emails,bidders,bidamounts=contract.functions.viewBids().call()
-    print(bid_tender_ids)
-    print(bid_emails)
-    print(bidders)
-    print(bidamounts)
-    print(session['username'])
+    # print(bid_tender_ids)
+    # print(bid_emails)
+    # print(bidders)
+    # print(bidamounts)
+    # print(session['username'])
     data=[]
     datai=[]
     for i in range(len(tender_ids)):
@@ -221,9 +232,20 @@ def bidsPage():
 
 @app.route('/allocate',methods=['GET','POST'])
 def allocateBidtoTender():
+    contract,web3=connect_Blockchain(session['username'])
+    bid_tender_ids,bid_emails,bidders,bidamounts=contract.functions.viewBids().call()
     tenderId=request.form['tenderId']
     bidderAddress=request.form['bidderAddress']
     print(tenderId,bidderAddress)
+    bidderIndex=bidders.index(bidderAddress)
+    output=bidderAddress
+    msg = MIMEMultipart()
+    msg['From'] = 'tenderblockchain@gmail.com'
+    msg['To'] = bid_emails[bidderIndex]
+    msg['Subject']= 'Your Bid for tender id ' +tenderId+' was finalised'
+    msg.attach(MIMEText("Please arrange a prior meeting for the MoU as your bid was selected", 'plain'))
+    text = msg.as_string()
+    smtpObj.sendmail('tenderblockchain@gmail.com',msg['To'],text)
     contract,web3=connect_Blockchain(session['username'])
     tx_hash=contract.functions.allocateTender(int(tenderId),bidderAddress).transact()
     web3.eth.waitForTransactionReceipt(tx_hash)

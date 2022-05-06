@@ -21,4 +21,24 @@ Blockchain Framework for Government Tender Allocation
 17. Validate Verify Bid Logic with Smart Contract |:heavy_check_mark:|
 18. List all bids on Tender Dashboard |:heavy_check_mark:|
 19. Create a Final Bid Page |:heavy_check_mark:|
-20. Send an email to bidder when tender finalises the bid |:x:|
+20. Send an email to bidder when tender finalises the bid |:heavy_check_mark:|
+
+# Softwares
+1. Ganache
+2. Truffle Suite
+3. VS Code
+4. Node.js
+
+# Packages
+1. flask
+2. web3
+
+# Run the Project
+1. compile the smart contracts - truffle compile
+2. Migrate the smart contracts - truffle migrate
+3. Replace the Contract Addresses
+3. Goto src - python app.py
+
+# Questions
+For questions, do reach me on <a href="https://linkedin.com/in/MadhuPIoT">LinkedIn</a>
+
