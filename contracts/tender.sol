@@ -26,6 +26,7 @@ contract tender {
         _tenderId.push(tenderId);
         _tenderData.push(tenderData);
         _tenderState.push(false);
+        _tenderBidder.push(tenderOwner);
     }
 
     function getTender(uint tenderId) public view returns (address,uint,string memory) {
@@ -67,7 +68,7 @@ contract tender {
         uint i;
         for(i=0;i<_tenderId.length;i++) {
             if(_tenderId[i]==tenderId) {
-                _tenderState[i]==true;
+                _tenderState[i]=true;
                 _tenderBidder[i]=bidOwner;
             }
         }

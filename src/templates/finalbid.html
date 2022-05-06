@@ -7,32 +7,7 @@
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="https://pingendo.com/assets/bootstrap/bootstrap-4.0.0-alpha.6.css" type="text/css">
-    <style>
-         @import url(https://fonts.googleapis.com/css?family=Roboto:300);
-        .card {
-            top:25%;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            min-width: 0;
-            word-wrap: break-word;
-            background-color: rgb(209, 124, 26);
-            background-clip: border-box;
-            border: 1px solid rgba(0,0,0,.125);
-            border-radius: .25rem;
-            width: fit-content;
-        }
-        
-        .card-text{
-            font-size:14px;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-            color: white;
-        }
-    </style>
+
 	</head>
 	<body>
 	<section class="ftco-section">
@@ -74,10 +49,10 @@
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav m-auto">
 	        	<li class="nav-item"><a href="/dashboard" class="nav-link">Home</a></li>
-			  	 <li class="nav-item"><a href="/tender" class="nav-link">Create Tender</a></li>
-	        	<li class="nav-item active"><a href="/bids" class="nav-link">See Bids</a></li>
-                <li class="nav-item"><a href="/finalbid" class="nav-link">Final Bid</a></li>
-	          <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+			  	<li class="nav-item"><a href="/tender" class="nav-link">Create Tender</a></li>
+	        	<li class="nav-item"><a href="/bids" class="nav-link">See Bids</a></li>
+            	<li class="nav-item active"><a href="/finalbid" class="nav-link">Final Bid</a></li>
+	          	<li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
 	        </ul>
 	      </div>
 	    </div>
@@ -86,35 +61,26 @@
 
 	</section>
     
-	<section >
-        <h3 style="text-align:center">See Bids on Blockchian</h3> <br/>
-        <br/>
-    </section>
-    <section>
-        <div id="container-fluid">
-            <table class="table">
-                <tr>
-                    <th>Tender Id</th>
-                    <th>Tender Details</th>
-                    <th>Bidder Email Id</th>
-                    <th>Bidder wallet Address</th>
-                    <th>Bid Amount</th>
-                    <th>Tender Status</th>
-                </tr>
-            {%for i in range(0, len)%}
-                <tr>
-                    <td>{{dashboard_data[i][0]}}</td>
-                    <td>{{dashboard_data[i][1]}}</td>
-                    <td>{{dashboard_data[i][2]}}</td>
-                    <td>{{dashboard_data[i][3]}}</td>
-                    <td>{{dashboard_data[i][4]}}</td>
-                    <td>{{dashboard_data[i][5]}}</td>
-                </tr>
-                
-            {%endfor%}
-            </table>
-        </div>
-    </section>
+	<section>
+	<div class="container">
+		<h2>Create Tender</h2>
+              <form action="/allocate" method="POST">
+                            
+              <div class="form-group">
+                <label for="name">Tender Id:</label>
+                <input type="text" class="form-control" id="tenderId" placeholder="Enter Tender ID" name="tenderId">
+              </div>
+          
+              <div class="form-group">
+                <label for="bidderAddress">Bidder Address:</label>
+                <input type="text" class="form-control" id="bidderAddress" placeholder="Enter Bidder Address" name="bidderAddress">
+              </div>
+              
+              <button type="submit" class="btn btn-warning btn-register">Final Tender</button>
+              </form>
+	</div>
+	</section>
+
   <script src="{{url_for('static',filename='js/jquery.min.js')}}"></script>
   <script src="{{url_for('static',filename='js/popper.js')}}"></script>
   <script src="{{url_for('static',filename='js/bootstrap.min.js')}}"></script>
@@ -135,3 +101,7 @@
   </script>
 </body>
 </html>
+
+
+
+

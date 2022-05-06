@@ -20,4 +20,5 @@ Blockchain Framework for Government Tender Allocation
 16. Create Verify Bid Page and Connect with dashboard |:heavy_check_mark:|
 17. Validate Verify Bid Logic with Smart Contract |:heavy_check_mark:|
 18. List all bids on Tender Dashboard |:heavy_check_mark:|
-19. Create a Final Bid Page |:x:|
+19. Create a Final Bid Page |:heavy_check_mark:|
+20. Send an email to bidder when tender finalises the bid |:x:|

@@ -9,7 +9,7 @@ def connect_Blockchain_register(acc):
         acc=web3.eth.accounts[0]
     web3.eth.defaultAccount=acc
     artifact_path='../build/contracts/register.json'
-    contract_address="0x4bFA851B2936a6B8DC0eB78998D68F8Ba5D03b41"
+    contract_address="0xcd060F40A50D22C12B708D485ea4c80495F0867e"
     with open(artifact_path) as f:
         contract_json=json.load(f)
         contract_abi=contract_json['abi']
@@ -25,7 +25,7 @@ def connect_Blockchain(acc):
         acc=web3.eth.accounts[0]
     web3.eth.defaultAccount=acc
     artifact_path='../build/contracts/tender.json'
-    contract_address="0x531ad3BE97D271d1CA71f99f2d9DB0170Ef2496c"
+    contract_address="0x04f469aeEb4e2345Fa89ad65a5c076afE57422F3"
     with open(artifact_path) as f:
         contract_json=json.load(f)
         contract_abi=contract_json['abi']
@@ -171,6 +171,10 @@ def registerPage():
 def loginPage():
     return (render_template('login.html'))
 
+@app.route('/finalbid')
+def finalBidPage():
+    return render_template('finalbid.html')
+
 @app.route('/logout')
 def logoutPage():
     session.pop('username',None)
@@ -214,6 +218,16 @@ def bidsPage():
         data.append(dummy)
     print(data)
     return render_template('bids.html',len=len(data),dashboard_data=data)
+
+@app.route('/allocate',methods=['GET','POST'])
+def allocateBidtoTender():
+    tenderId=request.form['tenderId']
+    bidderAddress=request.form['bidderAddress']
+    print(tenderId,bidderAddress)
+    contract,web3=connect_Blockchain(session['username'])
+    tx_hash=contract.functions.allocateTender(int(tenderId),bidderAddress).transact()
+    web3.eth.waitForTransactionReceipt(tx_hash)
+    return redirect('/finalbid')
 
 @app.route('/dashboard')
 def dashboardPage():
