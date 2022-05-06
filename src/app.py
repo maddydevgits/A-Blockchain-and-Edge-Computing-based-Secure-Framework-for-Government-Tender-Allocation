@@ -37,6 +37,10 @@ def connect_Blockchain(acc):
 app=Flask(__name__)
 app.secret_key = 'makeskilled'
 
+@app.route('/bid')
+def bidIndexPage():
+    return (render_template('bindex.html'))
+    
 @app.route('/')
 def indexPage():
     return (render_template('index.html'))
@@ -149,7 +153,7 @@ def tendersPage():
         
     return(render_template('tenders.html',len=len(data),dashboard_data=data))
 
-@app.route('/bid')
+@app.route('/createBid')
 def bidPage():
     return render_template('bid.html')
     
