@@ -35,6 +35,7 @@ def connect_Blockchain(acc):
     return (contract,web3)
 
 app=Flask(__name__)
+app.secret_key = 'makeskilled'
 
 @app.route('/')
 def indexPage():
