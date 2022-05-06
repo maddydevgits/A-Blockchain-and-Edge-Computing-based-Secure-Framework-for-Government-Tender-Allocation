@@ -104,6 +104,9 @@ def blogoutPage():
     session.pop('username',None)
     return render_template('bindex.html')
 
+@app.route('/createbid')
+def bidPage():
+    return render_template('bid.html')
 
 @app.route('/')
 def indexPage():
@@ -217,9 +220,6 @@ def tendersPage():
         
     return(render_template('tenders.html',len=len(data),dashboard_data=data))
 
-@app.route('/createBid')
-def bidPage():
-    return render_template('bid.html')
     
 if (__name__=='__main__'):
     app.run(debug=True)
