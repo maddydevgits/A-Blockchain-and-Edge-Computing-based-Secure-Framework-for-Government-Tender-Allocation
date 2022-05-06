@@ -50,10 +50,6 @@ contract tender {
 
     function bidTender(uint bidTenderId,uint bidAmount,string memory bidEmail) public {
 
-        require(!bidders[msg.sender]);
-
-        bidders[msg.sender]=true;
-
         _bidAmount.push(bidAmount);
         _bidders.push(msg.sender);
         _bidTenderId.push(bidTenderId);

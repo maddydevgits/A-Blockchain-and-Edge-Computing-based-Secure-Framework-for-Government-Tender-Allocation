@@ -9,7 +9,7 @@ def connect_Blockchain_register(acc):
         acc=web3.eth.accounts[0]
     web3.eth.defaultAccount=acc
     artifact_path='../build/contracts/register.json'
-    contract_address="0xdEa9286A2c200A795FB4d21A5D56292Ce4CDC8cE"
+    contract_address="0x4bFA851B2936a6B8DC0eB78998D68F8Ba5D03b41"
     with open(artifact_path) as f:
         contract_json=json.load(f)
         contract_abi=contract_json['abi']
@@ -25,7 +25,7 @@ def connect_Blockchain(acc):
         acc=web3.eth.accounts[0]
     web3.eth.defaultAccount=acc
     artifact_path='../build/contracts/tender.json'
-    contract_address="0xa794121Da749534db970D129743931fFd1a8F531"
+    contract_address="0x531ad3BE97D271d1CA71f99f2d9DB0170Ef2496c"
     with open(artifact_path) as f:
         contract_json=json.load(f)
         contract_abi=contract_json['abi']
@@ -122,7 +122,42 @@ def bidTenderPage():
 
 @app.route('/verifybid')
 def verifyBidPage():
-    return (render_template('verifybid.html'))
+    contract,web3=connect_Blockchain(session['username'])
+    tender_owners,tender_ids,tender_datas,tender_statuses,tender_bidders=contract.functions.viewTenders().call()
+    print(tender_owners)
+    print(tender_ids)
+    print(tender_datas)
+    print(tender_statuses)
+    print(tender_bidders)
+    bid_tender_ids,bid_emails,bidders,bidamounts=contract.functions.viewBids().call()
+    print(bid_tender_ids)
+    print(bid_emails)
+    print(bidders)
+    print(bidamounts)
+    print(session['username'])
+    data=[]
+    datai=[]
+    for i in range(len(bid_tender_ids)):
+        if session['username']==bidders[i]:
+            datai.append(i)
+    print(datai)
+    for j in datai:
+        dummy=[]
+        dummy.append(bid_tender_ids[j])
+        k=tender_ids.index(bid_tender_ids[j])
+        dummy.append(tender_datas[k])
+        dummy.append(bid_emails[j])
+        dummy.append(bidders[j])
+        dummy.append(bidamounts[j])
+        if(tender_statuses[k]==False):
+            dummy.append('In Progress')
+        elif(tender_statuses[k]==True and tender_bidders[k]==session['username']):
+            dummy.append('You Won')
+        elif(tender_statuses[k]==True and tender_bidders[k]!=session['username']):
+            dummy.append('You Lost')
+        data.append(dummy)
+    print(data)
+    return (render_template('verifybid.html',len=len(data),dashboard_data=data))
 
 @app.route('/')
 def indexPage():

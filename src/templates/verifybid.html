@@ -86,9 +86,34 @@
 	</section>
     
 	<section >
-        <h3 style="text-align:center">Verify My Bids on Blockchian</h3>
+        <h3 style="text-align:center">Verify My Bids on Blockchian</h3> <br/>
+        <br/>
     </section>
-        
+    <section>
+        <div id="container-fluid">
+            <table class="table">
+                <tr>
+                    <th>Tender Id</th>
+                    <th>Tender Details</th>
+                    <th>My Email Id</th>
+                    <th>My wallet Address</th>
+                    <th>Bid Amount</th>
+                    <th>Status</th>
+                </tr>
+            {%for i in range(0, len)%}
+                <tr>
+                    <td>{{dashboard_data[i][0]}}</td>
+                    <td>{{dashboard_data[i][1]}}</td>
+                    <td>{{dashboard_data[i][2]}}</td>
+                    <td>{{dashboard_data[i][3]}}</td>
+                    <td>{{dashboard_data[i][4]}}</td>
+                    <td>{{dashboard_data[i][5]}}</td>
+                </tr>
+                
+            {%endfor%}
+            </table>
+        </div>
+    </section>
   <script src="{{url_for('static',filename='js/jquery.min.js')}}"></script>
   <script src="{{url_for('static',filename='js/popper.js')}}"></script>
   <script src="{{url_for('static',filename='js/bootstrap.min.js')}}"></script>
