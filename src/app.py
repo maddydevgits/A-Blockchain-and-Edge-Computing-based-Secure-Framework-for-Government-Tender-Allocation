@@ -72,6 +72,33 @@ def bloginUser():
     else:
         return (redirect('/blogin'))
 
+@app.route('/bdashboard')
+def bdashboardPage():
+    contract,web3=connect_Blockchain(session['username'])
+    tender_owners,tender_ids,tender_datas,tender_statuses,tender_bidders=contract.functions.viewTenders().call()
+    # print(tender_owners)
+    # print(tender_ids)
+    # print(tender_datas)
+    # print(tender_statuses)
+    # print(tender_bidders)
+    data=[]
+    for i in range(len(tender_owners)):
+        dummy=[]
+        dummy.append(tender_owners[i])
+        dummy.append(tender_ids[i])
+        dummy.append(tender_datas[i])
+        if(tender_statuses[i]==False):
+            dummy.append('Open')
+        else:
+            dummy.append('Closed')
+        try:
+            dummy.append(tender_bidders[i])
+        except:
+            dummy.append('Tender Not Closed')
+        data.append(dummy)
+    print(data)
+    return render_template('bdashboard.html',len=len(data),dashboard_data=data)
+
 @app.route('/')
 def indexPage():
     return (render_template('index.html'))
