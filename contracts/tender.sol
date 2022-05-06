@@ -6,7 +6,6 @@ contract tender {
     address[] _tenderOwner;
     uint[] _tenderId;
     string[] _tenderData;
-    string[] _tenderEmail;
     bool[] _tenderState;
     address[] _tenderBidder;
 

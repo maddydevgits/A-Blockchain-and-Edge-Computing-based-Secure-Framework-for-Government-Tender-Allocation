@@ -119,7 +119,7 @@ def createTender():
     contract,web3=connect_Blockchain(tenderOwner)
     tx_hash=contract.functions.createTender(tenderOwner,tenderId,tenderData).transact()
     web3.eth.waitForTransactionReceipt(tx_hash)
-    return (redirect('/tender'))
+    return (redirect('/dashboard'))
 
 @app.route('/tenders')
 def tendersPage():
