@@ -175,7 +175,46 @@ def loginPage():
 def logoutPage():
     session.pop('username',None)
     return render_template('index.html')
-    
+
+@app.route('/bids')
+def bidsPage():
+    contract,web3=connect_Blockchain(session['username'])
+    tender_owners,tender_ids,tender_datas,tender_statuses,tender_bidders=contract.functions.viewTenders().call()
+    print(tender_owners)
+    print(tender_ids)
+    print(tender_datas)
+    print(tender_statuses)
+    print(tender_bidders)
+    bid_tender_ids,bid_emails,bidders,bidamounts=contract.functions.viewBids().call()
+    print(bid_tender_ids)
+    print(bid_emails)
+    print(bidders)
+    print(bidamounts)
+    print(session['username'])
+    data=[]
+    datai=[]
+    for i in range(len(tender_ids)):
+        if session['username']==tender_owners[i]:
+            datai.append(i)
+    print(datai)
+    for j in range(len(bid_tender_ids)):
+        dummy=[]
+        dummy.append(bid_tender_ids[j])
+        k=tender_ids.index(bid_tender_ids[j])
+        dummy.append(tender_datas[k])
+        dummy.append(bid_emails[j])
+        dummy.append(bidders[j])
+        dummy.append(bidamounts[j])
+        if(tender_statuses[k]==False):
+            dummy.append('In Progress')
+        elif(tender_statuses[k]==True and tender_bidders[k]==session['username']):
+            dummy.append('You Won')
+        elif(tender_statuses[k]==True and tender_bidders[k]!=session['username']):
+            dummy.append('You Lost')
+        data.append(dummy)
+    print(data)
+    return render_template('bids.html',len=len(data),dashboard_data=data)
+
 @app.route('/dashboard')
 def dashboardPage():
     contract,web3=connect_Blockchain(session['username'])
