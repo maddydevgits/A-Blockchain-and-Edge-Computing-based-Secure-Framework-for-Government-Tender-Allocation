@@ -100,12 +100,11 @@ def bdashboardPage():
         dummy.append(tender_datas[i])
         if(tender_statuses[i]==False):
             dummy.append('Open')
+            dummy.append('Tender Not Closed')
         else:
             dummy.append('Closed')
-        try:
             dummy.append(tender_bidders[i])
-        except:
-            dummy.append('Tender Not Closed')
+        
         data.append(dummy)
     print(data)
     return render_template('bdashboard.html',len=len(data),dashboard_data=data)
@@ -222,10 +221,9 @@ def bidsPage():
         dummy.append(bidamounts[j])
         if(tender_statuses[k]==False):
             dummy.append('In Progress')
-        elif(tender_statuses[k]==True and tender_bidders[k]==session['username']):
-            dummy.append('You Won')
-        elif(tender_statuses[k]==True and tender_bidders[k]!=session['username']):
-            dummy.append('You Lost')
+        elif(tender_statuses[k]==True):
+            dummy.append('Tender Closed')
+        
         data.append(dummy)
     print(data)
     return render_template('bids.html',len=len(data),dashboard_data=data)
@@ -235,13 +233,33 @@ def allocateBidtoTender():
     contract,web3=connect_Blockchain(session['username'])
     bid_tender_ids,bid_emails,bidders,bidamounts=contract.functions.viewBids().call()
     tenderId=request.form['tenderId']
-    bidderAddress=request.form['bidderAddress']
-    print(tenderId,bidderAddress)
-    bidderIndex=bidders.index(bidderAddress)
+    print(tenderId)
+    print(bid_tender_ids)
+    kIndexes=[]
+    kBidAmounts=[]
+    kBidEmails=[]
+    kBidders=[]
+    for i in range(len(bid_tender_ids)):
+        if int(tenderId)==bid_tender_ids[i]:
+            kBidAmounts.append(bidamounts[i])
+            kBidEmails.append(bid_emails[i])
+            kBidders.append(bidders[i])
+    
+    kMinBidAmount=min(kBidAmounts)
+    kMinBidIndex=kBidAmounts.index(kMinBidAmount)
+    bidderAddress=kBidders[kMinBidIndex]
+    # print(kBidders)
+    # print(kBidAmounts)
+    # print(kBidEmails)
+    # print(bidderAddress)
+
+    # bidderAddress=request.form['bidderAddress']
+    # print(tenderId,bidderAddress)
+    # bidderIndex=bidders.index(bidderAddress)
     output=bidderAddress
     msg = MIMEMultipart()
     msg['From'] = 'tenderblockchain@gmail.com'
-    msg['To'] = bid_emails[bidderIndex]
+    msg['To'] = kBidEmails[kMinBidIndex]
     msg['Subject']= 'Your Bid for tender id ' +tenderId+' was finalised'
     msg.attach(MIMEText("Please arrange a prior meeting for the MoU as your bid was selected", 'plain'))
     text = msg.as_string()
@@ -249,7 +267,7 @@ def allocateBidtoTender():
     contract,web3=connect_Blockchain(session['username'])
     tx_hash=contract.functions.allocateTender(int(tenderId),bidderAddress).transact()
     web3.eth.waitForTransactionReceipt(tx_hash)
-    return redirect('/finalbid')
+    return redirect('/dashboard')
 
 @app.route('/dashboard')
 def dashboardPage():
@@ -268,12 +286,11 @@ def dashboardPage():
         dummy.append(tender_datas[i])
         if(tender_statuses[i]==False):
             dummy.append('Open')
+            dummy.append('Tender Not Closed')
         else:
             dummy.append('Closed')
-        try:
             dummy.append(tender_bidders[i])
-        except:
-            dummy.append('Tender Not Closed')
+        
         data.append(dummy)
     print(data)
         
