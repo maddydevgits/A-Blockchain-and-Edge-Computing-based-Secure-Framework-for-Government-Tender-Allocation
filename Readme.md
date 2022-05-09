@@ -22,7 +22,11 @@ Blockchain Framework for Government Tender Allocation
 18. List all bids on Tender Dashboard :heavy_check_mark:
 19. Create a Final Bid Page :heavy_check_mark:
 20. Send an email to bidder when tender finalises the bid :heavy_check_mark:
-21. Change the keywords in tender pages :x:
+21. Change the keywords in tender pages :heavy_check_mark:
+22. Update the final bid page :heavy_check_mark:
+23. Calculate the minimum bid for a tender :heavy_check_mark:
+24. Update it to Smart Contract :heavy_check_mark:
+25. Finally display this :heavy_check_mark:
 
 # Softwares
 1. Ganache
