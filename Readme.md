@@ -36,7 +36,7 @@ Blockchain Framework for Government Tender Allocation
 32. Delete Email Box in Create Bid Page :heavy_check_mark:
 33. Validate with Smart Contract :heavy_check_mark:
 34. Modify the Allocate Tender Smart Contract :heavy_check_mark:
-35. Delete See Bids from Tender Dashboard :x:
+35. Delete See Bids from Tender Dashboard :heavy_check_mark:
 
 # Softwares
 1. Ganache
