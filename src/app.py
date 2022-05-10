@@ -114,14 +114,20 @@ def blogoutPage():
     session.pop('username',None)
     return render_template('bindex.html')
 
+@app.route('/bemail')
+def bemail():
+    return render_template('bemail.html')
+
 @app.route('/createbid')
 def bidPage():
     return render_template('bid.html')
 
-@app.route('/sendOTP')
+@app.route('/sendOtp',methods=['GET','POST'])
 def sendOTP():
+    email=request.form['email']
+    print(email)
     return render_template('otp.html')
-    
+
 @app.route('/bidTender',methods=['GET','POST'])
 def bidTenderPage():
     bidOwner=request.form['bidOwner']
