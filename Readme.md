@@ -34,7 +34,9 @@ Blockchain Framework for Government Tender Allocation
 30. Modify the Bid Register API Route :heavy_check_mark:
 31. Modify the Bid Login API Route :heavy_check_mark:
 32. Delete Email Box in Create Bid Page :heavy_check_mark:
-33. Validate with Smart Contract :x:
+33. Validate with Smart Contract :heavy_check_mark:
+34. Modify the Allocate Tender Smart Contract :heavy_check_mark:
+35. Delete See Bids from Tender Dashboard :x:
 
 # Softwares
 1. Ganache

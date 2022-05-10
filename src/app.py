@@ -22,7 +22,7 @@ def connect_Blockchain_register(acc):
         acc=web3.eth.accounts[0]
     web3.eth.defaultAccount=acc
     artifact_path='../build/contracts/register.json'
-    contract_address="0x483b82150bE2B7Ef3072DBC4683D40b5B1AdE25E"
+    contract_address="0x41BF6E801f6aa718d327CE1185FA1D9987365a55"
     with open(artifact_path) as f:
         contract_json=json.load(f)
         contract_abi=contract_json['abi']
@@ -38,7 +38,7 @@ def connect_Blockchain(acc):
         acc=web3.eth.accounts[0]
     web3.eth.defaultAccount=acc
     artifact_path='../build/contracts/tender.json'
-    contract_address="0x095493D146c6F82e72F4854D598956cb7804DBA3"
+    contract_address="0x39b78D2A346d7f85eF6Bd14A7100752D01Ab1c23"
     with open(artifact_path) as f:
         contract_json=json.load(f)
         contract_abi=contract_json['abi']
@@ -69,7 +69,7 @@ def bregisterUser():
     email=session['bidderemail']
     print(username,password)
     contract,web3=connect_Blockchain_register(username)
-    tx_hash=contract.functions.registerUser(username,int(password),email).transact()
+    tx_hash=contract.functions.registerBidUser(username,int(password),email).transact()
     web3.eth.waitForTransactionReceipt(tx_hash)
     return(redirect('/blogin'))
 
@@ -79,7 +79,7 @@ def bloginUser():
     password=int(request.form['password'])
     print(username,password)
     contract,web3=connect_Blockchain_register(username)
-    state=contract.functions.loginUser(username,password).call()
+    state=contract.functions.loginBidUser(username,password).call()
     if(len(state)>5):
         session['username']=username
         session['bidderemail']=state

@@ -16,6 +16,7 @@ contract tender {
     
     mapping(uint => bool) public tId;
     mapping(address =>bool) public bidders;
+    mapping(uint => bool) public tenderFinalIds;
 
     function createTender(address tenderOwner,uint tenderId,string memory tenderData) public {
 
@@ -66,6 +67,8 @@ contract tender {
     function allocateTender(uint tenderId,address bidOwner) public {
 
         uint i;
+        require(!tenderFinalIds[tenderId]);
+        tenderFinalIds[tenderId]=true;
         for(i=0;i<_tenderId.length;i++) {
             if(_tenderId[i]==tenderId) {
                 _tenderState[i]=true;
