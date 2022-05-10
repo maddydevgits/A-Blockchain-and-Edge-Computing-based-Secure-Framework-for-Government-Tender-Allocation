@@ -118,6 +118,10 @@ def blogoutPage():
 def bidPage():
     return render_template('bid.html')
 
+@app.route('/sendOTP')
+def sendOTP():
+    return render_template('otp.html')
+    
 @app.route('/bidTender',methods=['GET','POST'])
 def bidTenderPage():
     bidOwner=request.form['bidOwner']

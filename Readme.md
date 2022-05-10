@@ -27,7 +27,8 @@ Blockchain Framework for Government Tender Allocation
 23. Calculate the minimum bid for a tender :heavy_check_mark:
 24. Update it to Smart Contract :heavy_check_mark:
 25. Finally display this :heavy_check_mark:
-26. Seperate the html and smart contract validation :x:
+26. Seperate the tender register and bidder register smart contracts :heavy_check_mark:
+27. Add email text box in bidder register html :x:
 
 # Softwares
 1. Ganache
