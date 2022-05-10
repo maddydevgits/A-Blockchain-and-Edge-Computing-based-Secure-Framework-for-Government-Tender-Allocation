@@ -114,6 +114,7 @@ def bdashboardPage():
 @app.route('/blogout')
 def blogoutPage():
     session.pop('username',None)
+    session.pop('bidderemail',None)
     return render_template('bindex.html')
 
 @app.route('/bemail')
@@ -123,6 +124,15 @@ def bemail():
 @app.route('/createbid')
 def bidPage():
     return render_template('bid.html')
+
+@app.route('/verifyOtp',methods=['GET','POST'])
+def verifyOtp():
+    global otp_created
+    otp=request.form['otp']
+    if int(otp)==otp_created:
+        return redirect('/bregister')
+    else:
+        return redirect('/bemail')
 
 @app.route('/sendOtp',methods=['GET','POST'])
 def sendOTP():
