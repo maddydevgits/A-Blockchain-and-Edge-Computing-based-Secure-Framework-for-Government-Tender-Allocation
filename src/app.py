@@ -66,9 +66,10 @@ def bidLoginPage():
 def bregisterUser():
     username=request.form['username']
     password=request.form['password']
+    email=session['bidderemail']
     print(username,password)
     contract,web3=connect_Blockchain_register(username)
-    tx_hash=contract.functions.registerUser(username,int(password)).transact()
+    tx_hash=contract.functions.registerUser(username,int(password),email).transact()
     web3.eth.waitForTransactionReceipt(tx_hash)
     return(redirect('/blogin'))
 
@@ -79,8 +80,9 @@ def bloginUser():
     print(username,password)
     contract,web3=connect_Blockchain_register(username)
     state=contract.functions.loginUser(username,password).call()
-    if(state==True):
+    if(len(state)>5):
         session['username']=username
+        session['bidderemail']=state
         return (redirect('/bdashboard'))
     else:
         return (redirect('/blogin'))
