@@ -157,7 +157,7 @@ def bidTenderPage():
     bidOwner=request.form['bidOwner']
     tenderId=request.form['tenderId']
     bidAmount=request.form['bidAmount']
-    bidEmail=request.form['bidEmail']
+    bidEmail=session['bidderemail']
     print(bidOwner,tenderId,bidAmount,bidEmail)
     contract,web3=connect_Blockchain(bidOwner)
     tx_hash=contract.functions.bidTender(int(tenderId),int(bidAmount),bidEmail).transact()

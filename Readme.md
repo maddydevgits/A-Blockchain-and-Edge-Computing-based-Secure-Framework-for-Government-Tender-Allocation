@@ -33,7 +33,8 @@ Blockchain Framework for Government Tender Allocation
 29. Validate OTP :heavy_check_mark:
 30. Modify the Bid Register API Route :heavy_check_mark:
 31. Modify the Bid Login API Route :heavy_check_mark:
-32. Delete Email Box in Create Bid Page :x:
+32. Delete Email Box in Create Bid Page :heavy_check_mark:
+33. Validate with Smart Contract :x:
 
 # Softwares
 1. Ganache
