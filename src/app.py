@@ -1,3 +1,4 @@
+import random
 from flask import Flask, redirect,render_template,request,session
 from web3 import Web3,HTTPProvider
 import json
@@ -12,6 +13,7 @@ from email.mime.multipart import MIMEMultipart
 smtpObj=smtplib.SMTP('smtp.gmail.com',587)
 smtpObj.starttls()
 smtpObj.login('tenderblockchain@gmail.com','m@keskilled')
+otp_created=0
 
 def connect_Blockchain_register(acc):
     blockchain_address="http://127.0.0.1:7545"
@@ -124,8 +126,18 @@ def bidPage():
 
 @app.route('/sendOtp',methods=['GET','POST'])
 def sendOTP():
+    global otp_created
+    otp_created=random.randint(1800,9999)
     email=request.form['email']
     print(email)
+    msg = MIMEMultipart()
+    msg['From'] = 'tenderblockchain@gmail.com'
+    msg['To'] = email
+    msg['Subject']= 'Your OTP as bidder registration'
+    msg.attach(MIMEText("OTP to register: "+str(otp_created), 'plain'))
+    text = msg.as_string()
+    smtpObj.sendmail('tenderblockchain@gmail.com',msg['To'],text)
+    session['bidderemail']=email
     return render_template('otp.html')
 
 @app.route('/bidTender',methods=['GET','POST'])

@@ -29,7 +29,8 @@ Blockchain Framework for Government Tender Allocation
 25. Finally display this :heavy_check_mark:
 26. Seperate the tender register and bidder register smart contracts :heavy_check_mark:
 27. Create email html and its route :heavy_check_mark:
-28. Send OTP to the given email address :x:
+28. Send OTP to the given email address :heavy_check_mark:
+29. Validate OTP :x:
 
 # Softwares
 1. Ganache
