@@ -2,17 +2,9 @@ import random
 from flask import Flask, redirect,render_template,request,session
 from web3 import Web3,HTTPProvider
 import json
-import smtplib
+from otp import *
+import time
 
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-from email import encoders
-from email.mime.base import MIMEBase
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-smtpObj=smtplib.SMTP('smtp.gmail.com',587)
-smtpObj.starttls()
-smtpObj.login('tenderblockchain@gmail.com','m@keskilled')
 otp_created=0
 
 def connect_Blockchain_register(acc):
@@ -22,7 +14,7 @@ def connect_Blockchain_register(acc):
         acc=web3.eth.accounts[0]
     web3.eth.defaultAccount=acc
     artifact_path='../build/contracts/register.json'
-    contract_address="0x41BF6E801f6aa718d327CE1185FA1D9987365a55"
+    contract_address="0x4338Ff9ECb44DDFf33c8104A9324F64433a6E230"
     with open(artifact_path) as f:
         contract_json=json.load(f)
         contract_abi=contract_json['abi']
@@ -38,7 +30,7 @@ def connect_Blockchain(acc):
         acc=web3.eth.accounts[0]
     web3.eth.defaultAccount=acc
     artifact_path='../build/contracts/tender.json'
-    contract_address="0x39b78D2A346d7f85eF6Bd14A7100752D01Ab1c23"
+    contract_address="0xE59b88aCDcCe7048bf2E2909ca781Deb88ed0B43"
     with open(artifact_path) as f:
         contract_json=json.load(f)
         contract_abi=contract_json['abi']
@@ -142,13 +134,16 @@ def sendOTP():
     otp_created=random.randint(1800,9999)
     email=request.form['email']
     print(email)
-    msg = MIMEMultipart()
-    msg['From'] = 'tenderblockchain@gmail.com'
-    msg['To'] = email
-    msg['Subject']= 'Your OTP as bidder registration'
-    msg.attach(MIMEText("OTP to register: "+str(otp_created), 'plain'))
-    text = msg.as_string()
-    smtpObj.sendmail('tenderblockchain@gmail.com',msg['To'],text)
+    verifyIdentity(email)
+    while True:
+        try:
+            a=sendotp(otp_created,'OTP to register',email)
+            if(a):
+                break
+            else:
+                continue
+        except:
+            time.sleep(10)
     session['bidderemail']=email
     return render_template('otp.html')
 
@@ -291,13 +286,15 @@ def allocateBidtoTender():
     # print(tenderId,bidderAddress)
     # bidderIndex=bidders.index(bidderAddress)
     output=bidderAddress
-    msg = MIMEMultipart()
-    msg['From'] = 'tenderblockchain@gmail.com'
-    msg['To'] = kBidEmails[kMinBidIndex]
-    msg['Subject']= 'Your Bid for tender id ' +tenderId+' was finalised'
-    msg.attach(MIMEText("Please arrange a prior meeting for the MoU as your bid was selected", 'plain'))
-    text = msg.as_string()
-    smtpObj.sendmail('tenderblockchain@gmail.com',msg['To'],text)
+    while True:
+        try:
+            a=sendotp1('Your bid is finalized',kBidEmails[kMinBidIndex])
+            if(a):
+                break
+            else:
+                continue
+        except:
+            time.sleep(10)
     contract,web3=connect_Blockchain(session['username'])
     tx_hash=contract.functions.allocateTender(int(tenderId),bidderAddress).transact()
     web3.eth.waitForTransactionReceipt(tx_hash)
